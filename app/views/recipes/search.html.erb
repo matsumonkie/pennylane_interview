@@ -1,0 +1,47 @@
+<h1>Search Recipes by Ingredients</h1>
+
+<!-- ADD INGREDIENT FORM -->
+<%= form_with url: recipes_search_path, method: :post do |form| %>
+  <div>
+    <%= form.label :ingredient, "Enter Ingredient:" %>
+    <%= form.text_field :ingredient %>
+  </div>
+  <% @ingredients.each do |ingredient| %>
+    <%= hidden_field_tag "ingredients[]", ingredient %>
+  <% end %>
+  <div>
+    <%= form.submit "Add Ingredient" %>
+  </div>
+<% end %>
+
+<!-- SUBMITTED INGREDIENT -->
+<h2>Submitted Ingredients:</h2>
+<ul id="ingredients-list">
+  <% @ingredients.each do |ingredient| %>
+    <li>
+      <%= ingredient %>
+      <%= form_with url: recipes_search_path, method: :post do |form| %>
+        <% (@ingredients).each do |ing| %>
+          <%= hidden_field_tag "ingredients[]", ing %>
+        <% end %>
+        <%= hidden_field_tag :ingredient_to_remove, ingredient %>
+        <%= form.submit t(:remove), name: 'commit' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<!-- RECIPES -->
+<% if @recipes.present? %>
+  <h2>Matching Recipes (<%= @recipes.count %>):</h2>
+  <ul id="recipes-list">
+    <% @recipes.each do |recipe| %>
+      <li>
+        <strong><%= recipe.name %></strong>
+        <p><%= recipe.ingredients.join(", ") %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <h2>No Matching Recipes</h2>
+<% end %>
