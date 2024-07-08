@@ -29,3 +29,9 @@
 
 en:
   hello: "Hello world"
+
+  remove: Remove
+  cannot_be_blank: cannot be blank
+  cannot_be_sentence: cannot be sentence
+  cannot_already_be_submitted: cannot already be submitted
+  cannot_contain_invalid_characters: "cannot contain '|' or '&'"
